@@ -22,27 +22,36 @@ class Catalog:
     # TODO
     # def post_renditions()
 
-    def put_revision(self, asset_id, revision_id, body, sha256=None):
+    def put_asset(self, asset_id, body, sha256=None):
         headers = self.lr.__json_header__()
         if sha256:
             headers['If-None-Match'] = sha256
-
+        print(body)
         return self.lr._put(
-            path=f'catalogs/{self.catalog_id}/assets/{asset_id}/revisions/{revision_id}',
+            path=f'catalogs/{self.catalog_id}/assets/{asset_id}',
             data=json.dumps(body),
             headers=headers
         )
 
+    # stub to deprecate
+    def put_revision(self, asset_id, revision_id, body, sha256=None):
+        return self.put_asset(asset_id, body, sha256)
+
+    # stub, does not support revisions
     def put_master(self, asset_id, revision_id, data, content_type):
+        return self.put_master(asset_id, data, content_type)
+
+    def put_master(self, asset_id, data, content_type):
         headers = {'Content-Type': content_type}
         return self.lr._put(
-            path=f'catalogs/{self.catalog_id}/assets/{asset_id}/revisions/{revision_id}/master',
+            path=f'catalogs/{self.catalog_id}/assets/{asset_id}/master',
             data=data,
             headers=headers
         )
 
     def renditions(self, asset_id, rendition_type):
         return self.lr._get(f'catalogs/{self.catalog_id}/assets{asset_id}/renditions/{rendition_type}')
+
 
     def assets(self, **kwargs):
         if 'next' in kwargs:
@@ -84,14 +93,21 @@ class Catalog:
     # higher level helpers
     #
 
-    def create_new_revision_from_file(self, file_path, content_type, sha256=None):
-
-        # Create the asset and reivison id
+    def create_new_asset_from_file(self, file_path, content_type, sha256=None, 
+                                   capture_date=None, time_stamp=None):
+        # Create the asset ID
         asset_id = self.__get_uuid()
-        revision_id = self.__get_uuid()
 
         # timestamp this
-        import_timestamp = datetime.datetime.utcnow().isoformat() + 'Z'
+        if time_stamp: 
+            import_timestamp = time_stamp.isoformat() + 'Z'
+        else:
+            import_timestamp = datetime.datetime.utcnow().isoformat() + 'Z'
+
+        if capture_date:
+            import_capturedate = capture_date.isoformat()
+        else:
+            import_capturedate = '0000-00-00T00:00:00'
 
         # figure out the subtype
         subtype = 'image'
@@ -99,13 +115,12 @@ class Catalog:
             subtype = 'video'
 
         # create the revision
-        self.put_revision(
+        self.put_asset(
             asset_id,
-            revision_id,
             body={
                 'subtype': subtype,
                 'payload': {
-                    'captureDate': '0000-00-00T00:00:00',  # Do I neex exif data here?
+                    'captureDate': import_capturedate,
                     'userCreated': import_timestamp,
                     'userUpdated': import_timestamp,
                     'importSource': {
@@ -117,10 +132,19 @@ class Catalog:
                 }
             },
             sha256=sha256)
+        return asset_id
 
-        return (asset_id, revision_id)
+    # stub, does not do revisions, not supported by API
+    def create_new_revision_from_file(self, file_path, content_type, sha256=None, 
+                                      capture_date=None, time_stamp=None):
+        asset_id = self.create_new_asset_from_file(file_path, content_type,
+                                                   sha256, capture_date,
+                                                   time_stamp)
+        return (asset_id, '')
 
-    def upload_media_file(self, file_path):
+
+    def upload_media_file(self, file_path, 
+                          capture_date=None, time_stamp=None):
         """
         Uploads an image file to lightroom.
         Based on https://github.com/AdobeDocs/lightroom-partner-apis/blob/master/samples/adobe-auth-node/server/lr.js#L55
@@ -129,16 +153,18 @@ class Catalog:
         # Figure out the kind of file it is..
         content_type = self.lr.__get_mime_type_mapped__(file_path)
 
-        # Create a new revision
-        asset_id, revision_id = self.create_new_revision_from_file(
-            file_path, content_type)
+        # Create a new asset id
+        asset_id = self.create_new_asset_from_file(file_path, content_type,
+                                                   capture_date=capture_date,
+                                                   time_stamp=time_stamp)
 
         # Upload the original
         with open(file_path, 'rb') as f:
-            self.put_master(asset_id, revision_id, f, content_type)
+            self.put_master(asset_id, f, content_type)
 
         # return the asset and revision ids
         return asset_id
+
 
     def upload_media_file_if_not_exists(self, file_path):
         sha256 = self.lr.__get_shah_of_file__(file_path)

@@ -1,0 +1,22 @@
+Setup with venv
+
+```bash
+# setup virtualenv -- recommended
+virtualenv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+deactivate
+```
+
+```bash
+source .venv/bin/activate
+# ...
+```
+
+Changes vs old API
+
+* does not do revisions (not a part of the official API)
+* stub's all revision calls to just asset calls
+
+Known bugs:
+
+* Lightroom API doesn't keep captureDate -- it resets it to nothing on upload_media_file

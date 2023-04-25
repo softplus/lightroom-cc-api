@@ -14,7 +14,8 @@ class Lightroom:
     See https://www.adobe.io/apis/creativecloud/lightroom/apidocs.html
     """
 
-    def __init__(self, api_key, token, base='https://lr.adobe.io/v2/', session = None):
+    def __init__(self, api_key, token, base='https://lr.adobe.io/v2/', 
+                 session = None):
         if session is None:
             self.session = requests.Session()
         else:

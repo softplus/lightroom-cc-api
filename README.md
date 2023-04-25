@@ -1,9 +1,11 @@
 # lightroom-cc-api
 A Python implementation of Adobe's [Creative Cloud Lightroom API](https://www.adobe.io/apis/creativecloud/lightroom/apidocs.html).
 
+This is a fork from (https://github.com/lou-k/lightroom-cc-api)
+
 ## Disclaimer
 This project is new and needs a lot of work. Use with caution.. 
-See the [issues](https://github.com/lou-k/lightroom-cc-api/issues) page for some low hanging fruit if you have time to contribute :D.
+See the [issues](https://github.com/softplus/lightroom-cc-api/issues) page for some low hanging fruit if you have time to contribute :D.
 
 ## Pre-Requisities
 You'll need two things:
@@ -17,9 +19,8 @@ See the Lightroom's [getting started](https://www.adobe.io/apis/creativecloud/li
 
 The python package can be installed via pip/git:
 ```
-pip install git+https://github.com/lou-k/lightroom-cc-api.git@VERSION
+pip install git+https://github.com/softplus/lightroom-cc-api.git
 ```
-where `VERSION` is a [relase tag](https://github.com/lou-k/lightroom-cc-api/releases).
 
 In addition, you'll need libmagic. Install via:
 * OSX: `brew install libmagic`
@@ -52,3 +53,49 @@ catalog.upload_image_file(path_to_image)
 # Uploads an image to lightroom if it's not already in there.
 catalog.upload_image_file_if_not_exists(path_to_image)
 ```
+
+## Usage of sample script
+
+Here's my suggestion if you want to use the sample script.
+Just pull the whole repo, set up venv, install the requisites,
+make your .env file, and run.
+
+```bash
+git clone https://github.com/softplus/lightroom-cc-api
+cd lightroom-cc-api
+
+# setup virtualenv -- recommended
+virtualenv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+pip install -r requirements-sample.txt
+cp .env.example .env
+code .env # or your favorite editor
+# add your client_id, client_secret, and access token
+python3 sample.py
+# done
+deactivate
+```
+
+## Changes from original
+
+I didn't want to be pushy with changes to the original, so I forked this
+and wanted to use it to play around. This brought to light an annoying
+bug in the Adobe Lightroom API, which hasn't had updates since 2021.
+(The bug is that captureDate isn't used, which means all new images don't
+have a date associated with them. Lightroom doesn't use EXIF either, so
+you can't assign any dates.)
+
+Changes:
+
+* removed all "revision" functions & requests. This isn't documented in the
+public API, so I assume it might not last. (But also, no updates since 2021,
+so who really knows.)
+* added support for image timestamp & capture date. Timestamp is shown in the
+Lightroom UI, but capture date is lost on upload.
+* added a sample script
+
+Todo:
+
+* add a sample script to use oauth2 to get a token
+* added a doc for getting a token
+* document the code more
