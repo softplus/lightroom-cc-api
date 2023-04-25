@@ -13,7 +13,11 @@ You'll need two things:
 * A Lightroom integration api key
 * A token for your user.
 
-See the Lightroom's [getting started](https://www.adobe.io/apis/creativecloud/lightroom/docs.html#!quickstart/integration.md) walks you through this, but it's not very inutitive.. [issue #2](https://github.com/lou-k/lightroom-cc-api/issues/2) should add more documentation here.
+See the Lightroom's [getting started](https://www.adobe.io/apis/creativecloud/lightroom/docs.html#!quickstart/integration.md) walks you through this, but it's not very inutitive.
+
+[get_manual_token](get_manual_token.md) as a short guide for using the testing
+tool to get a manual token (valid for a day). Much easier than mucking around
+with key generators and all.
 
 ## Installation
 
@@ -93,9 +97,9 @@ so who really knows.)
 * added support for image timestamp & capture date. Timestamp is shown in the
 Lightroom UI, but capture date is lost on upload.
 * added a sample script
+* added a doc for getting a token
 
 Todo:
 
 * add a sample script to use oauth2 to get a token
-* added a doc for getting a token
 * document the code more
