@@ -10,7 +10,7 @@ See the [issues](https://github.com/softplus/lightroom-cc-api/issues) page for s
 ## Pre-Requisities
 You'll need two things:
 
-* A lightroom integration api key
+* A Lightroom integration api key
 * A token for your user.
 
 See the Lightroom's [getting started](https://www.adobe.io/apis/creativecloud/lightroom/docs.html#!quickstart/integration.md) walks you through this, but it's not very inutitive.. [issue #2](https://github.com/lou-k/lightroom-cc-api/issues/2) should add more documentation here.
