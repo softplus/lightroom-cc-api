@@ -75,7 +75,7 @@ pip install -r requirements-sample.txt
 cp .env.example .env
 code .env # or your favorite editor
 # add your client_id, client_secret, and access token
-python3 sample.py
+python3 sample_upload.py
 # done
 deactivate
 ```
