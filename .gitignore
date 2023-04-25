@@ -1,5 +1,4 @@
-.env
-!.env.example
+# Random notes doc
 .notes.txt
 
 # Byte-compiled / optimized / DLL files
@@ -7,9 +6,6 @@ __pycache__/
 
 # Environments
 .env
+!.env.example
 .venv
-env/
 venv/
-ENV/
-env.bak/
-venv.bak/
