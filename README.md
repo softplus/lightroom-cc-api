@@ -4,8 +4,7 @@ A Python implementation of Adobe's [Creative Cloud Lightroom API](https://www.ad
 This is a fork from (https://github.com/lou-k/lightroom-cc-api)
 
 ## Disclaimer
-This project is new and needs a lot of work. Use with caution.. 
-See the [issues](https://github.com/softplus/lightroom-cc-api/issues) page for some low hanging fruit if you have time to contribute :D.
+This project is new and needs a lot of work. Use with caution.
 
 ## Pre-Requisities
 You'll need two things:
@@ -60,9 +59,11 @@ catalog.upload_image_file_if_not_exists(path_to_image)
 
 ## Usage of sample script
 
-Here's my suggestion if you want to use the sample script.
-Just pull the whole repo, set up venv, install the requisites,
+Pull the whole repo, set up venv, install the requisites,
 make your .env file, and run.
+
+You will need to get a Lightroom API key to run the sample.
+To get them, check out [get_manual_tokens.md].
 
 ```bash
 git clone https://github.com/softplus/lightroom-cc-api
@@ -74,8 +75,8 @@ pip install -r requirements.txt
 pip install -r requirements-sample.txt
 cp .env.example .env
 code .env # or your favorite editor
-# add your client_id, client_secret, and access token
-python3 sample_upload.py
+# add your client_id and client_secret
+python3 sample_oauth.py
 # done
 deactivate
 ```
