@@ -1,7 +1,10 @@
 # lightroom-cc-api
 A Python implementation of Adobe's [Creative Cloud Lightroom API](https://www.adobe.io/apis/creativecloud/lightroom/apidocs.html).
 
-This is a fork from (https://github.com/lou-k/lightroom-cc-api)
+This is a fork from (https://github.com/lou-k/lightroom-cc-api).
+Original API is (c) Lou Kratz, GPLv3 Licensed.
+
+Example code is (c) John Mueller, MIT Licensed.
 
 ## Disclaimer
 This project is new and needs a lot of work. Use with caution.
@@ -9,18 +12,16 @@ This project is new and needs a lot of work. Use with caution.
 ## Pre-Requisities
 You'll need two things:
 
-* A Lightroom integration api key
+* A Lightroom integration API key
 * A token for your user.
 
 See the Lightroom's [getting started](https://www.adobe.io/apis/creativecloud/lightroom/docs.html#!quickstart/integration.md) walks you through this, but it's not very inutitive.
 
-[get_manual_token](get_manual_token.md) as a short guide for using the testing
-tool to get a manual token (valid for a day). Much easier than mucking around
-with key generators and all.
+(get_manual_token.md) as a short guide for getting an Oauth2 token (valid for a day).
 
 ## Installation
 
-The python package can be installed via pip/git:
+The Python package can be installed via pip/git:
 ```
 pip install git+https://github.com/softplus/lightroom-cc-api.git
 ```
@@ -31,8 +32,8 @@ In addition, you'll need libmagic. Install via:
 
 ## API Usage
 
-The `Lightroom` api object has the `health`, `account`, and `catalog` endpoints. 
-It also provides catalog api:
+The `Lightroom` API object has the `health`, `account`, and `catalog` endpoints.
+It also provides catalog API:
 ```python
 
 from lightroom import Lightroom
@@ -40,7 +41,7 @@ lr_api = Lightroom(api_key, token)
 catalog = lr_api.catalog_api()
 ```
 
-The catalog api contains all of of the `assets` and `albums` calls.
+The catalog API contains all of of the `assets` and `albums` calls.
 
 ```python
 # get the assets in the catalog
@@ -48,7 +49,7 @@ catalog.assets()
 ...
 ```
 
-The catalog api also has two higher-level functions to help you add media to your Lightroom account:
+The catalog API also has two higher-level functions to help you add media to your Lightroom account:
 ```
 # Uploads an image to lightroom
 catalog.upload_image_file(path_to_image)
@@ -61,9 +62,8 @@ catalog.upload_image_file_if_not_exists(path_to_image)
 
 Pull the whole repo, set up venv, install the requisites,
 make your .env file, and run.
-
 You will need to get a Lightroom API key to run the sample.
-To get them, check out [get_manual_tokens.md].
+To get them, check out (get_manual_tokens.md).
 
 ```bash
 git clone https://github.com/softplus/lightroom-cc-api
@@ -99,8 +99,8 @@ so who really knows.)
 Lightroom UI, but capture date is lost on upload.
 * added a sample script
 * added a doc for getting a token
+* add a sample script to use oauth2 to get a token
 
 Todo:
 
-* add a sample script to use oauth2 to get a token
 * document the code more

@@ -11,23 +11,27 @@
 # - Save client ID & client secret to the .env file
 #
 
+import os
 import requests
 from dotenv import dotenv_values
 from lightroom import Lightroom
 from datetime import datetime
 from urllib.parse import urlencode, quote_plus
 
-# get IDs & TOKEN, activate API
+# get IDs & TOKEN, activate API, if we have .env file
+if not os.path.exists(".env"):
+    print("No .env file found! Copy .env.sample first and add API info there.")
+    quit()
 config = dotenv_values(".env")
 
 # do oauth bounce
 page_url = "https://oauth-generic-lander.glitch.me/"
 authorization_url = "https://ims-na1.adobelogin.com/ims/authorize?"
 params = {
-    "client_id" : config["LR_CLIENT_ID"],
-    "scope" : "openid,lr_partner_apis,lr_partner_rendition_apis",
+    "client_id"     : config["LR_CLIENT_ID"],
+    "scope"         : "openid,lr_partner_apis,lr_partner_rendition_apis",
     "response_type" : "code",
-    "redirect_uri" : page_url
+    "redirect_uri"  : page_url
 }
 querystring = urlencode(params, quote_via=quote_plus)
 url = authorization_url + querystring
@@ -42,10 +46,10 @@ if not access_code:
 print("Authenticating ...")
 url = "https://ims-na1.adobelogin.com/ims/token"
 params = {
-    "grant_type" : "authorization_code",
-    "client_id" : config["LR_CLIENT_ID"],
+    "grant_type"    : "authorization_code",
+    "client_id"     : config["LR_CLIENT_ID"],
     "client_secret" : config["LR_CLIENT_SECRET"],
-    "code" : access_code
+    "code"          : access_code
 }
 data_form = urlencode(params, quote_via=quote_plus)
 headers = {"Content-Type": "application/x-www-form-urlencoded"}
