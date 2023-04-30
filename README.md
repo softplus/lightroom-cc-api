@@ -1,7 +1,7 @@
 # lightroom-cc-api
 A Python implementation of Adobe's [Creative Cloud Lightroom API](https://www.adobe.io/apis/creativecloud/lightroom/apidocs.html).
 
-This is a fork from (https://github.com/lou-k/lightroom-cc-api).
+This is a fork from [https://github.com/lou-k/lightroom-cc-api].
 Original API is (c) Lou Kratz, GPLv3 Licensed.
 
 Example code is (c) John Mueller, MIT Licensed.
@@ -17,7 +17,7 @@ You'll need two things:
 
 See the Lightroom's [getting started](https://www.adobe.io/apis/creativecloud/lightroom/docs.html#!quickstart/integration.md) walks you through this, but it's not very inutitive.
 
-(get_manual_token.md) as a short guide for getting an Oauth2 token (valid for a day).
+[get_manual_token.md] as a short guide for getting an Oauth2 token (valid for a day).
 
 ## Installation
 
