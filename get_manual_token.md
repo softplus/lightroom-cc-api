@@ -37,8 +37,8 @@ python3 sample_oauth.py
 deactivate
 ```
 
-The HTML & CSS for https://oauth-generic-lander.glitch.me/ is in /sample_html.
-I hosted it on glitch.com, but any web hosting will work (static hosting is fine).
+The HTML & CSS for https://oauth-generic-lander.glitch.me/ is in `/sample_html`.
+I hosted it on https://glitch.com/, but any web hosting will work (static hosting is fine).
 
-Advanced apps that run on a local workstation can use http://localhost/ as a redirect address, and pick up the code there.
+Advanced apps that run on a local workstation can use `http://localhost/` as a redirect address, and pick up the code there.
 This requires running a local webserver, which might no be suited for all use-cases (eg, headless, chat-bot).
