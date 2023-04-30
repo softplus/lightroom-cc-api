@@ -26,7 +26,6 @@ class Catalog:
         headers = self.lr.__json_header__()
         if sha256:
             headers['If-None-Match'] = sha256
-        print(body)
         return self.lr._put(
             path=f'catalogs/{self.catalog_id}/assets/{asset_id}',
             data=json.dumps(body),
